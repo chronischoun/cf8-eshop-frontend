@@ -24,13 +24,13 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (res) => {
-          console.log('Επιτυχία!', res);
+          console.log('Login succesfull', res);
           if (res.token) localStorage.setItem('token', res.token);
-          this.router.navigate(['/']); // Επιστροφή στην αρχική
+          this.router.navigate(['/']); 
         },
         error: (err) => {
-          console.error('Σφάλμα Login:', err);
-          alert('Λάθος email ή κωδικός');
+          console.error('Login error :', err);
+          alert('Invalid email or password');
         }
       });
     }
