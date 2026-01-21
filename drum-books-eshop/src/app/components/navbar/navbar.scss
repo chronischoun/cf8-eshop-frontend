@@ -1,6 +1,8 @@
 .nav-bar {
-  background-color: #121212; // Το βαθύ μαύρο
-  
+  background-color: #121212;
+  position: relative;         
+  z-index: 10;               
+
   .btn-menu {
     background-color: transparent;
     &:hover {

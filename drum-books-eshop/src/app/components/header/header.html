@@ -1,32 +1,29 @@
 <header class="w-100">
-  <div class="top-bar py-3 text-white">
+  <div class="top-bar py-3 text-white" style="background-color: #c30010;">
     <div class="container d-flex align-items-center justify-content-between">
       
-      <a routerLink="/" class="brand-logo d-flex align-items-center text-decoration-none text-white">
+      <div (click)="onLogoClick($event)" style="cursor: pointer;" class="brand-logo d-flex align-items-center text-decoration-none text-white">
         <span class="fs-2 fw-bold italic">DrumBooks</span>
-      </a>
+      </div>
 
-      <div class="search-container flex-grow-3 mx-4 mx-lg-5">
+      <div class="search-container w-50 mx-4">
         <div class="input-group">
-          <input type="text" class="form-control border-0 shadow-none ps-4" 
-                 placeholder=" Search for a book ">
+          <input type="text" class="form-control border-0 shadow-none ps-4" placeholder="Search for a book">
           <button class="btn btn-search bg-white border-0 text-danger px-3" type="button">
             <i class="bi bi-search"></i>
           </button>
         </div>
       </div>
 
-      <div class="d-flex align-items-center gap-3">
-        <i class="bi bi-shop fs-4 d-none d-md-block" title="Καταστήματα"></i>
-        <div class="position-relative cursor-pointer" title="My Cart">
+      <div class="d-flex align-items-center">
+        <div class="position-relative cursor-pointer text-white">
           <i class="bi bi-cart3 fs-3"></i>
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark border border-light">
             {{ cartCount }}
           </span>
         </div>
       </div>
+
     </div>
   </div>
-
-  
 </header>

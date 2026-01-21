@@ -1,15 +1,32 @@
-<nav class="nav-bar py-1  shadow-sm">
-    <div class="container d-flex justify-content-between align-items-center">
+<nav class="nav-bar py-1 shadow-sm">
+  <div class="container d-flex justify-content-between align-items-center">
+    
+    <button class="btn btn-menu d-flex align-items-center gap-2 text-white border border-secondary px-3 py-1">
+      <i class="bi bi-list fs-5"></i>
+      <span class="fw-bold small">MENU</span>
+    </button>
+
+    <div class="auth-section">
       
-      <button class="btn btn-menu d-flex align-items-center gap-2 text-white border border-secondary px-3 py-1">
-        <i class="bi bi-list fs-5"></i>
-        <span class="fw-bold small">MENU</span>
+      <button
+        *ngIf="!authService.isLoggedIn()"
+        type="button"
+        class="login-trigger d-flex align-items-center gap-2 py-1 px-2 btn btn-link text-white text-decoration-none"
+        routerLink="/login">
+        <span class="small fw-bold">Log In</span>
+        <i class="bi bi-person-circle fs-4"></i>
       </button>
 
-      <div class="login-trigger d-flex align-items-center text-white gap-2 py-1 px-2">
-        <span class="small fw-bold letter-spacing-1">Log In</span>
-        <i class="bi bi-person-circle fs-4"></i>
-      </div>
+      <button
+        *ngIf="authService.isLoggedIn()"
+        type="button"
+        class="login-trigger d-flex align-items-center gap-2 py-1 px-2 btn btn-link text-white text-decoration-none"
+        (click)="logout()">
+        <span class="small fw-bold">Log Out</span>
+        <i class="bi bi-box-arrow-right fs-4"></i>
+      </button>
 
     </div>
-  </nav>
+
+  </div>
+</nav>
