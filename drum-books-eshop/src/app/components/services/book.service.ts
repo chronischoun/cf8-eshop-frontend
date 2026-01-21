@@ -2,14 +2,16 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
 export interface Book {
-  _id: number;
+  _id: string;        
   title: string;
   author: string;
   price: number;
-  imageUrl: string;
-  pdfUuid: string; 
-  filename: string;
+  imageUrl?: string;
+  pdfUuid?: string; 
+  filename?: string;
+  pdfUrl?: string;   
 }
 
 @Injectable({
@@ -18,6 +20,7 @@ export interface Book {
 export class BookService {
   private http = inject(HttpClient); 
 
+  
   private apiUrl = 'http://localhost:3000/api/products'; 
 
   getBooks(): Observable<Book[]> {

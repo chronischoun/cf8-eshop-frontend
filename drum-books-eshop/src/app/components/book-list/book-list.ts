@@ -6,7 +6,7 @@ import { PdfThumbnailComponent } from '../pdf-thumbnail/pdf-thumbnail';
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  // 2. Πρόσθεσε το PdfThumbnailComponent εδώ
+
   imports: [CommonModule, PdfThumbnailComponent], 
   templateUrl: './book-list.html',
   styleUrl: './book-list.scss'
