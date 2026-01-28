@@ -1,8 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookService, Book } from '../services/book.service';
 import { PdfThumbnailComponent } from '../pdf-thumbnail/pdf-thumbnail'; 
 import { CartService } from '../services/cart.service'; 
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-book-list',
@@ -11,27 +14,52 @@ import { CartService } from '../services/cart.service';
   templateUrl: './book-list.html',
   styleUrl: './book-list.scss'
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
   private bookService = inject(BookService); 
   private cartService = inject(CartService); 
+  private router = inject(Router);
+
+  // Χρήση Signals για αυτόματο UI update
+  books = signal<Book[]>([]);
+  isLoading = signal<boolean>(true);
   
-  books: Book[] = []; 
+  private routerSubscription?: Subscription;
 
   ngOnInit(): void {
+    this.loadBooks();
+
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.loadBooks();
+    });
+  }
+
+  loadBooks(): void {
+    // Θέτουμε την κατάσταση σε loading χρησιμοποιώντας .set()
+    this.isLoading.set(true); 
+    
     this.bookService.getBooks().subscribe({
       next: (data) => {
-        this.books = data;
-        console.log('Books received:', this.books);
+        this.books.set(data ?? []); // Ενημέρωση των βιβλίων
+        this.isLoading.set(false);   // Τερματισμός loading
+        console.log('Books loaded successfully:', data); 
       },
       error: (err) => {
-        console.error('API Error:', err);
+        console.error('Error fetching books:', err);
+        this.books.set([]);
+        this.isLoading.set(false);
       }
     });
   }
 
- 
   addToCart(book: Book): void {
-    console.log('🚀 Προσθήκη στο καλάθι από τη λίστα:', book);
     this.cartService.addToCart(book);
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }

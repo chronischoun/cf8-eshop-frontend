@@ -11,6 +11,6 @@ export const appConfig: ApplicationConfig = {
       onSameUrlNavigation: 'reload' 
     })),
     provideHttpClient(),
-    provideClientHydration(withEventReplay())
+    provideClientHydration()
   ]
 };

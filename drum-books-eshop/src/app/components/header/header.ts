@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; 
 import { CartService } from '../services/cart.service';
 import { map } from 'rxjs/operators';
@@ -7,24 +7,21 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, CommonModule], 
+  imports: [CommonModule, RouterModule], 
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class HeaderComponent {
+  public cartService = inject(CartService);
   private router = inject(Router);
-  private cartService = inject(CartService);
 
+  // Observable για το badge του καλαθιού
   public totalCount$ = this.cartService.cartItems$.pipe(
-    map(items => items.length)
+    map(items => items?.length || 0)
   );
 
-  onLogoClick(event: Event) {
-    event.preventDefault(); 
-    if (this.router.url === '/') {
-      window.location.reload();
-    } else {
-      this.router.navigate(['/']);
-    }
+  // Η μέθοδος που λύνει το "διπλό κλικ"
+  onLogoClick() {
+    this.router.navigate(['/'], { onSameUrlNavigation: 'reload' });
   }
 }
