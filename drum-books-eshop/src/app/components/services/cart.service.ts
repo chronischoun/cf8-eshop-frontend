@@ -10,4 +10,18 @@ export class CartService {
     const currentItems = this.cartItemsSubject.value;
     this.cartItemsSubject.next([...currentItems, book]);
   }
+
+  removeFromCart(index: number) {
+    const currentItems = this.cartItemsSubject.value;
+    const updatedItems = currentItems.filter((_, i) => i !== index);
+    this.cartItemsSubject.next(updatedItems);
+  }
+
+  clearCart() {
+    this.cartItemsSubject.next([]);
+  }
+
+  getSnapshot() {
+    return this.cartItemsSubject.value;
+  }
 }
