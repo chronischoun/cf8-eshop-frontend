@@ -12,8 +12,7 @@ import { CartService } from '../services/cart.service';
 })
 export class CartComponent {
   public cartService = inject(CartService);
-  private router = inject(Router); // Χρήση του Router για πλοήγηση
-
+  private router = inject(Router); 
   removeItem(index: number) {
     this.cartService.removeFromCart(index);
   }
@@ -24,8 +23,8 @@ export class CartComponent {
     }
   }
 
-  // Μέθοδος για σίγουρη επιστροφή στην αρχική
+  
   goBack() {
-    this.router.navigate(['/']); // Πλοήγηση στο path ''
+    this.router.navigate(['/']); 
   }
 }

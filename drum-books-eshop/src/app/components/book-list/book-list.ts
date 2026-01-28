@@ -19,7 +19,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   private cartService = inject(CartService); 
   private router = inject(Router);
 
-  // Χρήση Signals για αυτόματο UI update
+ 
   books = signal<Book[]>([]);
   isLoading = signal<boolean>(true);
   
@@ -36,13 +36,13 @@ export class BookListComponent implements OnInit, OnDestroy {
   }
 
   loadBooks(): void {
-    // Θέτουμε την κατάσταση σε loading χρησιμοποιώντας .set()
+    
     this.isLoading.set(true); 
     
     this.bookService.getBooks().subscribe({
       next: (data) => {
-        this.books.set(data ?? []); // Ενημέρωση των βιβλίων
-        this.isLoading.set(false);   // Τερματισμός loading
+        this.books.set(data ?? []); 
+        this.isLoading.set(false);   
         console.log('Books loaded successfully:', data); 
       },
       error: (err) => {

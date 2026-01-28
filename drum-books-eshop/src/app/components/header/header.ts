@@ -15,12 +15,11 @@ export class HeaderComponent {
   public cartService = inject(CartService);
   private router = inject(Router);
 
-  // Observable για το badge του καλαθιού
+  
   public totalCount$ = this.cartService.cartItems$.pipe(
     map(items => items?.length || 0)
   );
 
-  // Η μέθοδος που λύνει το "διπλό κλικ"
   onLogoClick() {
     this.router.navigate(['/'], { onSameUrlNavigation: 'reload' });
   }
