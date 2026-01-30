@@ -3,6 +3,8 @@ import { LoginComponent } from './components/login/login';
 import { BookListComponent } from './components/book-list/book-list'; 
 import { CartComponent } from './components/cart/cart'; 
 import { CheckoutComponent } from './components/checkout/checkout'; 
+import { ContactComponent } from './components/contact/contact';
+import { InformationComponent } from './components/information/information';
 
 export const routes: Routes = [
   { 
@@ -11,5 +13,7 @@ export const routes: Routes = [
   }, 
   { path: 'login', component: LoginComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent } 
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'contact', component: ContactComponent } , 
+  { path: 'info', component: InformationComponent }
 ];

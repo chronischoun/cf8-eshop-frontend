@@ -1,13 +1,32 @@
 <nav class="nav-bar py-1 shadow-sm">
   <div class="container d-flex justify-content-between align-items-center">
     
-    <button class="btn btn-menu d-flex align-items-center gap-2 text-white border border-secondary px-3 py-1">
-      <i class="bi bi-list fs-5"></i>
-      <span class="fw-bold small">MENU</span>
-    </button>
+    <div class="dropdown">
+      <button 
+        class="btn btn-menu d-flex align-items-center gap-2 text-white px-3 py-1 dropdown-toggle custom-border"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <i class="bi bi-list fs-5"></i>
+        <span class="fw-bold small">MENU</span>
+      </button>
+      
+      <ul class="dropdown-menu shadow mt-2 border-dark " aria-labelledby="dropdownMenuButton">
+        <li>
+          <a class="dropdown-item d-flex align-items-center gap-2" routerLink="/info">
+            <i class="bi bi-info-circle"></i> Information
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item d-flex align-items-center gap-2" routerLink="/contact">
+            <i class="bi bi-envelope"></i> Contact
+          </a>
+        </li>
+      </ul>
+    </div>
 
     <div class="auth-section">
-      
       <button
         *ngIf="!authService.isLoggedIn()"
         type="button"
@@ -25,7 +44,6 @@
         <span class="small fw-bold">Log Out</span>
         <i class="bi bi-box-arrow-right fs-4"></i>
       </button>
-
     </div>
 
   </div>
