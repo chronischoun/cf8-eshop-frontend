@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookService, Book } from '../services/book.service';
 import { PdfThumbnailComponent } from '../pdf-thumbnail/pdf-thumbnail'; 
@@ -18,11 +18,24 @@ export class BookListComponent implements OnInit, OnDestroy {
   private bookService = inject(BookService); 
   private cartService = inject(CartService); 
   private router = inject(Router);
-
- 
+  
+  public searchTerm = this.bookService.searchTerm;
+  
   books = signal<Book[]>([]);
   isLoading = signal<boolean>(true);
-  
+
+  filteredBooks = computed(() => {
+    const term = this.bookService.searchTerm().toLowerCase().trim();
+    const allBooks = this.books();
+
+    if (!term) return allBooks;
+
+    return allBooks.filter(book => 
+      book.title.toLowerCase().includes(term) || 
+      book.author?.toLowerCase().includes(term)
+    );
+  });
+
   private routerSubscription?: Subscription;
 
   ngOnInit(): void {
@@ -36,14 +49,13 @@ export class BookListComponent implements OnInit, OnDestroy {
   }
 
   loadBooks(): void {
-    
     this.isLoading.set(true); 
     
     this.bookService.getBooks().subscribe({
       next: (data) => {
         this.books.set(data ?? []); 
         this.isLoading.set(false);   
-        console.log('Books loaded successfully:', data); 
+        console.log('Books loaded successfully:', data);
       },
       error: (err) => {
         console.error('Error fetching books:', err);

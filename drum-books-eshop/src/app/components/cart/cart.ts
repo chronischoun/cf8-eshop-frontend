@@ -1,18 +1,21 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router'; 
+import { CommonModule } from '@angular/common'; 
+import { RouterModule, RouterLink } from '@angular/router'; 
 import { CartService } from '../services/cart.service'; 
 
 @Component({
   selector: 'app-cart',
   standalone: true,           
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, RouterLink], 
   templateUrl: './cart.html',
   styleUrls: ['./cart.scss'] 
 })
 export class CartComponent {
   public cartService = inject(CartService);
-  private router = inject(Router); 
+
+  items = this.cartService.cartItems;
+  total = this.cartService.totalAmount;
+
   removeItem(index: number) {
     this.cartService.removeFromCart(index);
   }
@@ -21,10 +24,5 @@ export class CartComponent {
     if (confirm('Are you sure you want to clear the cart?')) {
       this.cartService.clearCart();
     }
-  }
-
-  
-  goBack() {
-    this.router.navigate(['/']); 
   }
 }

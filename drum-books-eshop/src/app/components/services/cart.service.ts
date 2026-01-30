@@ -1,27 +1,24 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private cartItemsSubject = new BehaviorSubject<any[]>([]);
-  cartItems$ = this.cartItemsSubject.asObservable();
+  private cartItemsSignal = signal<any[]>([]);
+
+  cartItems = this.cartItemsSignal.asReadonly();
+
+  totalAmount = computed(() => 
+    this.cartItemsSignal().reduce((acc, item) => acc + (item.price || 0), 0)
+  );
 
   addToCart(book: any) {
-    const currentItems = this.cartItemsSubject.value;
-    this.cartItemsSubject.next([...currentItems, book]);
+    this.cartItemsSignal.update(items => [...items, book]);
   }
 
   removeFromCart(index: number) {
-    const currentItems = this.cartItemsSubject.value;
-    const updatedItems = currentItems.filter((_, i) => i !== index);
-    this.cartItemsSubject.next(updatedItems);
+    this.cartItemsSignal.update(items => items.filter((_, i) => i !== index));
   }
 
   clearCart() {
-    this.cartItemsSubject.next([]);
-  }
-
-  getSnapshot() {
-    return this.cartItemsSubject.value;
+    this.cartItemsSignal.set([]);
   }
 }

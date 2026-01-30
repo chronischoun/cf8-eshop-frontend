@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; 
 import { CartService } from '../services/cart.service';
-import { map } from 'rxjs/operators';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-header',
@@ -13,14 +13,18 @@ import { map } from 'rxjs/operators';
 })
 export class HeaderComponent {
   public cartService = inject(CartService);
+  private bookService = inject(BookService);
   private router = inject(Router);
 
-  
-  public totalCount$ = this.cartService.cartItems$.pipe(
-    map(items => items?.length || 0)
-  );
+  public totalCount = computed(() => this.cartService.cartItems().length);
+
+  onSearchChange(event: any) {
+    const value = event.target.value;
+    this.bookService.searchTerm.set(value);
+  }
 
   onLogoClick() {
-    this.router.navigate(['/'], { onSameUrlNavigation: 'reload' });
+    this.bookService.searchTerm.set(''); 
+    this.router.navigate(['/']);
   }
 }
