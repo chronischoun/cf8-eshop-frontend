@@ -12,7 +12,7 @@
         <span class="fw-bold small">MENU</span>
       </button>
       
-      <ul class="dropdown-menu shadow mt-2 border-dark " aria-labelledby="dropdownMenuButton">
+      <ul class="dropdown-menu shadow mt-2 border-dark" aria-labelledby="dropdownMenuButton">
         <li>
           <a class="dropdown-item d-flex align-items-center gap-2" routerLink="/info">
             <i class="bi bi-info-circle"></i> Information
@@ -26,14 +26,23 @@
       </ul>
     </div>
 
-    <div class="auth-section">
+    <div class="auth-section d-flex align-items-center gap-2">
+      
+      <a 
+        *ngIf="authService.isLoggedIn()" 
+        routerLink="/profile" 
+        class="d-flex align-items-center gap-2 py-1 px-2 text-white text-decoration-none profile-link">
+        <span class="small fw-bold">My Library</span>
+        <i class="bi bi-person-circle fs-4"></i>
+      </a>
+
       <button
         *ngIf="!authService.isLoggedIn()"
         type="button"
         class="login-trigger d-flex align-items-center gap-2 py-1 px-2 btn btn-link text-white text-decoration-none"
         routerLink="/login">
         <span class="small fw-bold">Log In</span>
-        <i class="bi bi-person-circle fs-4"></i>
+        <i class="bi bi-person-badge fs-4"></i>
       </button>
 
       <button
@@ -44,7 +53,7 @@
         <span class="small fw-bold">Log Out</span>
         <i class="bi bi-box-arrow-right fs-4"></i>
       </button>
+      
     </div>
-
   </div>
 </nav>

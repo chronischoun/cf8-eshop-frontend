@@ -5,6 +5,10 @@ import { CartComponent } from './components/cart/cart';
 import { CheckoutComponent } from './components/checkout/checkout'; 
 import { ContactComponent } from './components/contact/contact';
 import { InformationComponent } from './components/information/information';
+import { FooterComponent } from './components/footer/footer';
+import { ProfileComponent } from './components/profile/profile';
+
+
 
 export const routes: Routes = [
   { 
@@ -15,5 +19,7 @@ export const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'contact', component: ContactComponent } , 
-  { path: 'info', component: InformationComponent }
+  { path: 'info', component: InformationComponent } , 
+  { path: 'profile', component: ProfileComponent }
+  
 ];
