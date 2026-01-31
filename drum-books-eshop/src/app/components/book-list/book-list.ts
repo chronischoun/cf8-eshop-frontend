@@ -25,7 +25,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   isLoading = signal<boolean>(true);
 
   filteredBooks = computed(() => {
-    const term = this.bookService.searchTerm().toLowerCase().trim();
+    const term = this.searchTerm().toLowerCase().trim();
     const allBooks = this.books();
 
     if (!term) return allBooks;
@@ -55,7 +55,6 @@ export class BookListComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.books.set(data ?? []); 
         this.isLoading.set(false);   
-        console.log('Books loaded successfully:', data);
       },
       error: (err) => {
         console.error('Error fetching books:', err);
@@ -70,8 +69,6 @@ export class BookListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
+    this.routerSubscription?.unsubscribe();
   }
 }

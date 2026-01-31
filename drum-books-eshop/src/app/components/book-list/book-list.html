@@ -10,17 +10,22 @@
             <div class="thumbnail-container shadow-sm rounded"
                  style="height: 250px; overflow: hidden; background: #f8f9fa;
                         display: flex; align-items: center; justify-content: center;">
-              @if (book.pdfUrl) {
-                <app-pdf-thumbnail [pdfUrl]="book.pdfUrl"></app-pdf-thumbnail>
+              
+              @if (book.pdfUuid) {
+                <app-pdf-thumbnail [pdfUrl]="'http://localhost:3000/api/pdf/view/' + book.pdfUuid"></app-pdf-thumbnail>
               } @else {
-                <span class="text-muted small">No Preview Available</span>
+                <div class="d-flex flex-column align-items-center">
+                  <i class="bi bi-file-earmark-pdf text-muted fs-1"></i>
+                  <span class="text-muted small">No Preview Available</span>
+                </div>
               }
             </div>
 
             <div class="card-body text-center d-flex flex-column">
-              <h6 class="card-title fw-bold text-truncate">{{ book.title }}</h6>
+              <h6 class="card-title fw-bold text-truncate" [title]="book.title">{{ book.title }}</h6>
               <p class="small text-muted mb-2">{{ book.author || 'Unknown Author' }}</p>
               <p class="fs-5 fw-bold text-danger mt-auto">{{ book.price }} €</p>
+              
               <button (click)="addToCart(book)" 
                       class="btn btn-dark w-100 mt-2 d-flex align-items-center justify-content-center gap-2">
                 <i class="bi bi-cart-plus"></i> Add to cart

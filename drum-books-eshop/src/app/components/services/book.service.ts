@@ -2,23 +2,24 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  price: number;
-  imageUrl?: string;
-  pdfUuid?: string;
-  filename?: string;
-  pdfUrl?: string;
-}
 
+export interface Book {
+  _id?: string;
+  title: string;
+  author?: string;
+  description?: string;
+  price: number;
+  stock: number;
+  category: string;
+  pdfUuid?: string; 
+  pdfUrl?: string;  
+}
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/products';
+private apiUrl = 'http://localhost:3000/api/products'
 
   public searchTerm = signal<string>('');
 

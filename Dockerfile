@@ -1,17 +1,15 @@
-FROM node:18-alpine AS build
+FROM node:22-alpine AS build
 WORKDIR /app
 
-COPY package*.json ./
+COPY drum-books-eshop/package*.json ./
 RUN npm install
 
-COPY . .
+RUN npm install pdfjs-dist
+
+COPY drum-books-eshop/ .
 RUN npm run build --configuration=production
 
 FROM nginx:stable-alpine
-
-
-COPY --from=build /app/dist/cf8-eshop-frontend/browser /usr/share/nginx/html
-
+COPY --from=build /app/dist/drum-books-eshop/browser /usr/share/nginx/html
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
